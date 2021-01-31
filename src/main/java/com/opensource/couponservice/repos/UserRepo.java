@@ -6,4 +6,5 @@ import com.opensource.couponservice.model.User;
 
 public interface UserRepo extends JpaRepository<User, Long> {
 
+	User findByEmail(String email);
 }
