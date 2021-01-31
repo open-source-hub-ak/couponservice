@@ -3,7 +3,6 @@ package com.opensource.couponservice.model;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,21 +23,17 @@ public class Role implements GrantedAuthority {
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
 
+	@Override
+	public String getAuthority() {
+		return name;
+	}
+
 	public Set<User> getUsers() {
 		return users;
 	}
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	@Override
-	public String getAuthority() {
-		return name;
 	}
 
 	public Long getId() {
