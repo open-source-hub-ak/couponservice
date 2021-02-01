@@ -28,8 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.formLogin(); // what type of authentication form based , basic etc
 
 		// Here how we are authorizing request
-		http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/couponapi/coupons/{code:^[A-Z]*$}","/","/index").hasAnyRole("USER", "ADMIN")
-				.mvcMatchers(HttpMethod.POST, "/couponapi/coupons").hasRole("ADMIN").anyRequest().denyAll().and().csrf().disable();
+		http.authorizeRequests()
+				.mvcMatchers(HttpMethod.GET, "/couponapi/coupons/{code:^[A-Z]*$}", "/", "/index", "/createCoupon",
+						"createResponse")
+				.hasAnyRole("USER", "ADMIN").mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon")
+				.hasRole("ADMIN").anyRequest().denyAll().and().csrf().disable();
 	}
 
 	@Bean
