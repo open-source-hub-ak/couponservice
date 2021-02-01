@@ -18,7 +18,7 @@ private SecurityService securityService;
 		return "login";
 	}
 	
-	@PostMapping("/login")
+	@PostMapping("/loginapi")
 	public String login(String username, String password) {
 		boolean loginResponse = securityService.login(username, password);
 		if (loginResponse) {
