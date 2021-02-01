@@ -39,9 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				.mvcMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("USER", "ADMIN")
 				.mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon").hasRole("ADMIN")
-				.mvcMatchers("/","/login","/loginapi").permitAll()
+				.mvcMatchers("/","/login","/loginapi", "/error").permitAll()
 				.anyRequest()
-				.denyAll().and().csrf().disable();
+				.denyAll().and().csrf().disable().logout().logoutSuccessUrl("/");
 	}
 
 	@Bean
