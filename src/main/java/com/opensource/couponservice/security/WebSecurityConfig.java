@@ -29,10 +29,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Here how we are authorizing request
 		http.authorizeRequests()
-				.mvcMatchers(HttpMethod.GET, "/couponapi/coupons/{code:^[A-Z]*$}", "/", "/index", "/createCoupon",
-						"/createResponse","showCoupon","/couponDetails")
-				.hasAnyRole("USER", "ADMIN").mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon", "/getCoupon")
-				.hasRole("ADMIN").anyRequest().denyAll().and().csrf().disable();
+				.mvcMatchers(HttpMethod.GET, "/couponapi/coupons/{code:^[A-Z]*$}", "/", "/index", "showCoupon",
+							"/couponDetails").hasAnyRole("USER", "ADMIN")
+				.mvcMatchers(HttpMethod.GET, "/createCoupon", "/createResponse").hasRole("ADMIN")
+				
+				.mvcMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("USER","ADMIN")
+				.mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon" ).hasRole("ADMIN")
+				.anyRequest().denyAll().and().csrf().disable();
 	}
 
 	@Bean
