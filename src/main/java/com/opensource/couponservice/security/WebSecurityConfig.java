@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,12 +31,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// Here how we are authorizing request
 		http.authorizeRequests()
 				.mvcMatchers(HttpMethod.GET, "/couponapi/coupons/{code:^[A-Z]*$}", "/", "/index", "showCoupon",
-							"/couponDetails").hasAnyRole("USER", "ADMIN")
-				.mvcMatchers(HttpMethod.GET, "/createCoupon", "/createResponse").hasRole("ADMIN")
-				
-				.mvcMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("USER","ADMIN")
-				.mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon" ).hasRole("ADMIN")
-				.anyRequest().denyAll().and().csrf().disable();
+						"/couponDetails")
+				.hasAnyRole("USER", "ADMIN").mvcMatchers(HttpMethod.GET, "/createCoupon", "/createResponse")
+				.hasRole("ADMIN")
+
+				.mvcMatchers(HttpMethod.POST, "/getCoupon").hasAnyRole("USER", "ADMIN")
+				.mvcMatchers(HttpMethod.POST, "/couponapi/coupons", "/saveCoupon").hasRole("ADMIN").anyRequest()
+				.denyAll().and().csrf().disable();
 	}
 
 	@Bean
@@ -43,4 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 }
