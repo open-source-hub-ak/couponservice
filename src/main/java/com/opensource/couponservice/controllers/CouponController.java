@@ -14,11 +14,6 @@ public class CouponController {
 
 	@Autowired
 	CouponRepo repo;
-	
-	@GetMapping("/")
-	public String index() {
-		return "index";
-	}
 
 	@GetMapping("/createCoupon")
 	public String createCoupon() {
@@ -30,11 +25,12 @@ public class CouponController {
 		repo.save(coupon);
 		return "createResponse";
 	}
+
 	@GetMapping("/showCoupon")
 	public String showCoupon() {
 		return "showCoupon";
 	}
-	
+
 	@PostMapping("/getCoupon")
 	public ModelAndView getCoupon(String code) {
 		ModelAndView mav = new ModelAndView("couponDetails");
