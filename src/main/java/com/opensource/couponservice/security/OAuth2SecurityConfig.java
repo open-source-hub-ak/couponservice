@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class OAuth2SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	// we have only exposed beans to bne used in auth server
 	@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
