@@ -1,5 +1,7 @@
 package com.opensource.couponservice.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import com.opensource.couponservice.util.SecurityConstants;
 
@@ -26,9 +29,20 @@ public class AuthorizationServiceConfig extends AuthorizationServerConfigurerAda
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	DataSource dataSource;
+
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.tokenStore(new InMemoryTokenStore()).authenticationManager(authenticationManager)
+		// This is inmemory token store
+		/*
+		 * endpoints.tokenStore(new
+		 * InMemoryTokenStore()).authenticationManager(authenticationManager)
+		 * .userDetailsService(userDetailsService);
+		 */
+
+		// this is jdbc token store
+		endpoints.tokenStore(new JdbcTokenStore(dataSource)).authenticationManager(authenticationManager)
 				.userDetailsService(userDetailsService);
 	}
 
